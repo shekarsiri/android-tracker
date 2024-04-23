@@ -46,16 +46,27 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
+tasks {
+    create("listComponents") {
+        doLast {
+            println("components")
+            project.components.forEach { component ->
+                println("Component: ${component.name}")
+            }
+        }
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("release") {
+            // Use the components that Gradle provides by default for Android libraries
+            from(components.findByName("release"))
+
             // Artifact details:
             groupId = "com.openreplay"
             artifactId = "tracker"
             version = "1.0.0"
-
-            // Use the components that Gradle provides by default for Android libraries
-//             from(components["java"])
 
             // Pom configuration for additional metadata
             pom {
