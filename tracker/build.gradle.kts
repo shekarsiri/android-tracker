@@ -64,9 +64,9 @@ publishing {
             from(components.findByName("release"))
 
             // Artifact details:
-            groupId = "com.openreplay"
+            groupId = "com.openreplay.tracker"
             artifactId = "tracker"
-            version = "1.0.0"
+            version = "1.0.5"
 
             // Pom configuration for additional metadata
             pom {
