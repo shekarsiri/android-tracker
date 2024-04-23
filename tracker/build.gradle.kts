@@ -55,7 +55,7 @@ publishing {
             version = "1.0.0"
 
             // Use the components that Gradle provides by default for Android libraries
-            // from(components["release"])
+//             from(components["java"])
 
             // Pom configuration for additional metadata
             pom {
