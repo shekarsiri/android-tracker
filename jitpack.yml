@@ -10,4 +10,4 @@ jdk:
 #  - ./gradlew clean build :tracker:publishToMavenLocal -x test
 #
 install:
-  - ./gradlew build :tracker:publishReleasePublicationToMavenLocal
+  - ./gradlew build :tracker:publishToMavenLocal
