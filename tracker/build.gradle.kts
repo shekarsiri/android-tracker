@@ -66,7 +66,7 @@ publishing {
             // Artifact details:
             groupId = "com.openreplay.tracker"
             artifactId = "tracker"
-            version = "1.0.5"
+            version = "1.0.6"
 
             // Pom configuration for additional metadata
             pom {
