@@ -1,10 +1,10 @@
 jdk:
   - openjdk17
 
-group: com.openreplay.tracker
-
-before_install:
-  - ./scripts/prepareJitpackEnvironment.sh
+#group: com.openreplay.tracker
+#
+#before_install:
+#  - ./scripts/prepareJitpackEnvironment.sh
 
 #install:
 #  - ./gradlew clean build :tracker:publishToMavenLocal -x test

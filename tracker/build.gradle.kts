@@ -66,7 +66,7 @@ afterEvaluate {
 
                 // Artifact details:
                 groupId = "com.openreplay.tracker"
-                artifactId = "tracker"
+                artifactId = "openreplay"
                 version = "1.0.9"
 
                 // Pom configuration for additional metadata
