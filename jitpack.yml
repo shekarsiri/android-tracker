@@ -1,6 +1,8 @@
 jdk:
   - openjdk17
 
+group: com.openreplay.tracker
+
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 

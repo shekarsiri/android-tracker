@@ -95,6 +95,16 @@ publishing {
                     url.set("http://github.com/openreplay/android")
                 }
             }
+
+            pom.withXml {
+                val dependenciesNode = asNode().appendNode("dependencies")
+                configurations.getByName("implementation").allDependencies.forEach { dependency ->
+                    val dependencyNode = dependenciesNode.appendNode("dependency")
+                    dependencyNode.appendNode("groupId", dependency.group)
+                    dependencyNode.appendNode("artifactId", dependency.name)
+                    dependencyNode.appendNode("version", dependency.version)
+                }
+            }
         }
     }
 
