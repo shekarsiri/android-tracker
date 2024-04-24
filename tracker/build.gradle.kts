@@ -31,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -60,53 +66,66 @@ tasks {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("release") {
-                // Use the components that Gradle provides by default for Android libraries
-                // from(components["release"])
-
-                // Artifact details:
+            create<MavenPublication>("maven") {
+                from(components["release"])
                 groupId = "com.openreplay.tracker"
                 artifactId = "openreplay"
-                version = "1.0.9"
-
-                // Pom configuration for additional metadata
-                pom {
-                    name.set("OpenReplay Android Tracker")
-                    description.set("A brief description of what your library does.")
-                    url.set("https://www.openreplay.com")
-
-                    licenses {
-                        license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id.set("shekarsiri")
-                            name.set("Shekar Sirikonda")
-                            email.set("shekar@openreplay.com")
-                        }
-                    }
-
-                    scm {
-                        connection.set("scm:git:git@example.com:yourcompany/library.git")
-                        developerConnection.set("scm:git:ssh://example.com:yourcompany/library.git")
-                        url.set("http://github.com/openreplay/android")
-                    }
-                }
-
-                pom.withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation").allDependencies.forEach { dependency ->
-                        val dependencyNode = dependenciesNode.appendNode("dependency")
-                        dependencyNode.appendNode("groupId", dependency.group)
-                        dependencyNode.appendNode("artifactId", dependency.name)
-                        dependencyNode.appendNode("version", dependency.version)
-                    }
-                }
+                version = "1.1.2"
             }
         }
     }
 }
+
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            create<MavenPublication>("maven") {
+//                // Use the components that Gradle provides by default for Android libraries
+//                from(components["release"])
+//
+//                // Artifact details:
+//                groupId = "com.openreplay.tracker"
+//                artifactId = "openreplay"
+//                version = "1.0.9"
+//
+//                // Pom configuration for additional metadata
+//                pom {
+//                    name.set("OpenReplay Android Tracker")
+//                    description.set("A brief description of what your library does.")
+//                    url.set("https://www.openreplay.com")
+//
+//                    licenses {
+//                        license {
+//                            name.set("The Apache License, Version 2.0")
+//                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//                        }
+//                    }
+//
+//                    developers {
+//                        developer {
+//                            id.set("shekarsiri")
+//                            name.set("Shekar Sirikonda")
+//                            email.set("shekar@openreplay.com")
+//                        }
+//                    }
+//
+//                    scm {
+//                        connection.set("scm:git:git@example.com:yourcompany/library.git")
+//                        developerConnection.set("scm:git:ssh://example.com:yourcompany/library.git")
+//                        url.set("http://github.com/openreplay/android")
+//                    }
+//                }
+//
+//                pom.withXml {
+//                    val dependenciesNode = asNode().appendNode("dependencies")
+//                    configurations.getByName("implementation").allDependencies.forEach { dependency ->
+//                        val dependencyNode = dependenciesNode.appendNode("dependency")
+//                        dependencyNode.appendNode("groupId", dependency.group)
+//                        dependencyNode.appendNode("artifactId", dependency.name)
+//                        dependencyNode.appendNode("version", dependency.version)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
