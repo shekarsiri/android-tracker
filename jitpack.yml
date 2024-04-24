@@ -6,5 +6,8 @@ group: com.openreplay.tracker
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 
+#install:
+#  - ./gradlew clean build :tracker:publishToMavenLocal -x test
+#
 install:
-  - ./gradlew clean build :tracker:publishToMavenLocal -x test
+  - ./gradlew :tracker:publishReleasePublicationToMavenLocal
