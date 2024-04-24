@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.openreplay.sampleapp.databinding.ActivityMainBinding
+import com.openreplay.tracker.OpenReplay
 
 class MainActivity : AppCompatActivity() {
 
