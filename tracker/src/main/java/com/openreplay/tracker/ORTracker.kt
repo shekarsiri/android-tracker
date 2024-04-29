@@ -1,14 +1,18 @@
 package com.openreplay.tracker
 
+import NetworkManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.view.View
 import com.google.gson.Gson
 import com.openreplay.tracker.listeners.Analytics
 import com.openreplay.tracker.listeners.Crash
 import com.openreplay.tracker.listeners.LogsListener
+import com.openreplay.tracker.listeners.NetworkListener
 import com.openreplay.tracker.listeners.PerformanceListener
+import com.openreplay.tracker.listeners.sendNetworkMessage
 import com.openreplay.tracker.managers.*
 import com.openreplay.tracker.models.OROptions
 import com.openreplay.tracker.models.SessionRequest
@@ -45,10 +49,14 @@ object OpenReplay {
         this.options = this.options.merge(options)
         this.projectKey = projectKey
 
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
-            override fun onCapabilitiesChanged(network: android.net.Network, capabilities: NetworkCapabilities) {
+            override fun onCapabilitiesChanged(
+                network: android.net.Network,
+                capabilities: NetworkCapabilities
+            ) {
                 super.onCapabilitiesChanged(network, capabilities)
                 handleNetworkChange(capabilities, onStarted)
             }
@@ -73,7 +81,8 @@ object OpenReplay {
             sessionResponse ?: return@create println("Openreplay: no response from /start request")
             MessageCollector.start()
 
-            val captureSettings = getCaptureSettings(fps = 1, quality = this.options.screenshotQuality)
+            val captureSettings =
+                getCaptureSettings(fps = 1, quality = this.options.screenshotQuality)
             ScreenshotManager.setSettings(settings = captureSettings)
 
             with(options) {
@@ -116,7 +125,8 @@ object OpenReplay {
                 }
                 if (performances) PerformanceListener.getInstance(appContext!!).start()
                 if (screen) {
-                    val captureSettings = getCaptureSettings(fps = 1, quality = options.screenshotQuality)
+                    val captureSettings =
+                        getCaptureSettings(fps = 1, quality = options.screenshotQuality)
                     ScreenshotManager.setSettings(settings = captureSettings)
                     ScreenshotManager.start(appContext!!, sessionStartTs)
                     ScreenshotManager.cycleBuffer()
@@ -189,6 +199,17 @@ object OpenReplay {
         val gson = Gson()
         val jsonPayload = `object`?.let { gson.toJson(it) } ?: ""
         eventStr(name, jsonPayload)
+    }
+
+    fun networkRequest(
+        url: String,
+        method: String,
+        requestJSON: String,
+        responseJSON: String,
+        status: Int,
+        duration: ULong
+    ) {
+        sendNetworkMessage(url, method, requestJSON, responseJSON, status, duration.toLong())
     }
 
     fun eventStr(name: String, jsonPayload: String) {
